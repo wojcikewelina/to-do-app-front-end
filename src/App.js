@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./index.css";
+import Sheet from "./components/Sheet.js";
+import Header from "./components/Header.js";
+
+// zmienić doStatus!
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page-content">
+      <Header />
+      <div className="all-sheets">
+        <Sheet mainTitle="To do" doStatus="do" />
+        <Sheet mainTitle="In progress" doStatus="in progress" />
+        <Sheet mainTitle="Done" doStatus="done" />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,22 @@
+li {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+  input{
+border: none;
+background: none;
+letter-spacing: 0.1rem;
+  }
+
+    p {
+        margin-right: 1rem;
+    }
+    .task-btn-container {
+        min-width: 25px;
+
+      
+    }
+        
+}
