@@ -8,29 +8,46 @@ export default class Task extends Component {
     super(props);
     this.state = {
       inputValue: this.props.name,
-      showBtn: false
+      showBtn: false,
     };
   }
 
-
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
       inputValue: event.target.value,
-      showBtn: true
     });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      showBtn: false
+
+    editTask(this.props.id, this.state.inputValue, this.props.status).then(
+      () => {
+        this.props.onUpdate();
+      }
+    );
+  };
+
+  removeOnClick = () => {
+    removeTask(this.props.id).then(() => {
+      this.props.onUpdate();
     });
-    editTask(this.props.id, this.state.inputValue, this.props.status);
-  }
-  
-  removeOnClick = ()=> {
-    removeTask(this.props.id)
-};
+  };
+
+  toogleShowButton = () => {
+    //TAK NIE WOLNO :(
+    //  https://reactjs.org/docs/react-component.html#setstate
+
+    // this.setState({
+    //   showBtn: !this.state.showBtn,
+    // });
+
+    this.setState((oldState) => {
+      return {
+        showBtn: !oldState.showBtn,
+      };
+    });
+  };
 
   render() {
     return (
@@ -41,6 +58,8 @@ export default class Task extends Component {
               type="text"
               value={this.state.inputValue}
               onChange={this.handleChange}
+              onFocus={this.toogleShowButton}
+              onBlur={this.toogleShowButton}
             />
             {this.state.showBtn ? <button>Click to edit</button> : null}
           </form>
@@ -52,4 +71,3 @@ export default class Task extends Component {
     );
   }
 }
-
