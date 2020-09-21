@@ -1,75 +1,56 @@
 import React, { Component } from "react";
 import "../style/Sheet.scss";
 
-import { getAllTasksApi, addNewTask } from "../services/getFetch";
+import { addNewTask } from "../services/getFetch";
 import Task from "./Task";
-
-let allTaskElements = [];
 
 export default class Sheet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiData: [],
-      status: this.props.doStatus,
       addInputValue: ""
     };
   }
 
- 
-  componentDidMount() {
-    this.getApi();
-  }
-
-  componentDidUpdate() {
-    this.getApi();
-  }
-
-  getApi = () => {
-    getAllTasksApi()
-      .then(result => {
-        this.setState({
-          apiData: result
-        });
-      });
-  }
-
-  onAddInputChange = event => {
+  onAddInputChange = (event) => {
     this.setState({
       addInputValue: event.target.value
     });
   };
 
-  addOnSubmit = event => {
+  addOnSubmit = (event) => {
     event.preventDefault();
-    addNewTask(this.state.addInputValue, this.props.doStatus)
-      .then(() => {
-        this.setState({
-          addInputValue: ""
-        })
-      });
+    if(this.state.addInputValue.length>3){
+
+      addNewTask(
+        this.state.addInputValue,
+        this.props.mainTitle.toLocaleLowerCase()
+        ).then(() => {
+          this.setState({
+            addInputValue: ""
+          })
+          this.props.onChange();
+        });
+      }
+      else{
+        alert("Wprowadź poprawne zadanie")
+      }
+
   };
 
-
-  editOnClick = () => {
-    alert("test");
-  }
-
   render() {
-    const { mainTitle, doStatus } = this.props;
-    allTaskElements = this.state.apiData.map((element, i) => {
-
-      if (element.status === doStatus) {
-        return (
-          <Task
-            id={element.id}
-            name={element.name}
-            status={element.status}
-            key={element.id + "num"}
-          />
+    const { mainTitle, tasks } = this.props;
+    const allTaskElements = tasks.map((element, i) => {
+      return (
+        <Task
+          id={element.id}
+          name={element.name}
+          status={element.status}
+          key={element.id + "num"}
+          onUpdate={this.props.onChange}
+        />
         );
-      }
-    })
+    });
 
 
     return (
