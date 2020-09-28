@@ -3,6 +3,7 @@ import "./index.scss";
 import Sheet from "./components/Sheet.js";
 import Header from "./components/Header.js";
 import { getAllTasksApi } from "./services/getFetch";
+import Login from "./components/Login";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <div className="page-content">
+      <Login/>
       <Header />
       <div className="all-sheets">
         <Sheet
